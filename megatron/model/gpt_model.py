@@ -282,7 +282,8 @@ class GPTModelPipe(PipelineModule,MegatronModule):
 
         if args.checkpoint_activations:
             interval = args.checkpoint_num_layers
-        elif args.recompute_granularity == "full":
+        elif args.recompute_granularity == "full" and args.recompute_method == 'uniform':
+            # deepspeed's pipeline doesn't support the block recompute method
             interval = args.recompute_num_layers
         else:
             interval = 0
